@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "SkinnerBox - Horror Website Blocker",
+  "version": "1.0.0",
+  "description": "Bury websites for days. Breaking the seal requires watching 1 hour of horror animations.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "SkinnerBox Control Panel"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data: https://media.giphy.com https://fonts.gstatic.com; font-src 'self' data: https://fonts.gstatic.com;"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

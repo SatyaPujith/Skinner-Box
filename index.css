@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Creepster';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Creepster'), url('https://fonts.gstatic.com/s/creepster/v13/AlZy_zVUqJz4yMrniH4hdXf4XB0Tow.woff2') format('woff2');
+  }
+  
+  @font-face {
+    font-family: 'Special Elite';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Special Elite'), url('https://fonts.gstatic.com/s/specialelite/v18/XLYgIZbkc4JPUL5CVArUVL0nhncESXFtUsM.woff2') format('woff2');
+  }
+
+  :root {
+    --color-blood: #8a0b0b;
+    --color-static: #111;
+  }
+
+  html {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #050505;
+    color: #e0e0e0;
+    font-family: 'Special Elite', monospace;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Popup mode - constrained width */
+  body.popup-mode {
+    width: 400px;
+    min-height: 600px;
+  }
+
+  body.popup-mode #root {
+    width: 400px;
+    min-height: 600px;
+  }
+
+  /* Full screen mode - take full viewport */
+  body.fullscreen-mode {
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.fullscreen-mode #root {
+    width: 100vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+@layer components {
+  /* CRT Scanline Effect */
+  .scanlines {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.2) 50%,
+      rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+  }
+
+  /* Noise Animation */
+  .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 40;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  .font-horror { 
+    font-family: 'Creepster', cursive; 
+  }
+  
+  .font-analog { 
+    font-family: 'Special Elite', cursive; 
+  }
+  
+  .glitch-active {
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    color: var(--color-blood);
+    text-shadow: 2px 0 #000, -2px 0 #0ff;
+  }
+}
+
+@layer utilities {
+  /* Text Glitch Keyframes */
+  @keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(-2deg); }
+    40% { transform: skew(2deg); }
+    60% { transform: skew(-1deg); }
+    80% { transform: skew(1deg); }
+    100% { transform: skew(0deg); }
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.02); }
+  }
+
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 1; }
+    5% { opacity: 0.1; }
+    10% { opacity: 1; }
+    15% { opacity: 0.1; }
+    20% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+
+  .animate-flicker {
+    animation: flicker 3s infinite;
+  }
+}
