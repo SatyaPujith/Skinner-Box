@@ -220,7 +220,12 @@ const Dashboard: React.FC<DashboardProps> = ({
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       exit={{ opacity: 0 }}
-      className="w-full min-h-screen p-4 relative"
+      style={{
+        width: '100%',
+        minHeight: '100vh',
+        padding: '16px',
+        position: 'relative'
+      }}
     >
       {/* Blood drip effect */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-b from-red-900 to-transparent opacity-30" />
@@ -235,15 +240,21 @@ const Dashboard: React.FC<DashboardProps> = ({
         transition={{ duration: 3, repeat: Infinity }}
       />
 
-      <header style={{ marginBottom: '20px', textAlign: 'center', position: 'relative', zIndex: 10 }}>
+      <header style={{ marginBottom: '16px', textAlign: 'center', position: 'relative', zIndex: 10 }}>
         <motion.h1 
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-horror text-red-700 tracking-wider mb-1 drop-shadow-[0_0_20px_rgba(220,38,38,0.8)]"
-          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(220,38,38,0.5)' }}
+          style={{
+            fontSize: '28px',
+            fontFamily: 'Creepster, cursive',
+            color: '#DC2626',
+            letterSpacing: '0.1em',
+            marginBottom: '4px',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(220,38,38,0.5)'
+          }}
         >
-          SKINNER BOX
+          DEAD SCROLL
         </motion.h1>
         <motion.div
           initial={{ y: -10, opacity: 0 }}
@@ -251,7 +262,13 @@ const Dashboard: React.FC<DashboardProps> = ({
           transition={{ delay: 0.2 }}
           className="relative"
         >
-          <p className="font-analog text-red-900 text-xs tracking-wider uppercase">
+          <p style={{
+            fontFamily: 'monospace',
+            color: '#7F1D1D',
+            fontSize: '10px',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase'
+          }}>
             Horror Website Blocker
           </p>
           <motion.div 
@@ -263,7 +280,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         </motion.div>
       </header>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {/* ADD NEW SECTION */}
         <motion.div 
           initial={{ x: -20, opacity: 0 }}
@@ -272,15 +289,16 @@ const Dashboard: React.FC<DashboardProps> = ({
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
             border: '2px solid #7F1D1D',
-            borderRadius: '12px',
-            padding: '20px',
-            boxShadow: '0 0 30px rgba(220, 38, 38, 0.2)'
+            borderRadius: '8px',
+            padding: '12px',
+            boxShadow: '0 0 20px rgba(220, 38, 38, 0.2)',
+            boxSizing: 'border-box'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-            <Skull size={20} color="#DC2626" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            <Skull size={16} color="#DC2626" />
             <h2 style={{
-              fontSize: '18px',
+              fontSize: '16px',
               fontFamily: 'Creepster, cursive',
               color: '#DC2626',
               margin: 0
@@ -289,13 +307,13 @@ const Dashboard: React.FC<DashboardProps> = ({
             </h2>
           </div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div>
               <label style={{
                 display: 'block',
-                marginBottom: '6px',
+                marginBottom: '4px',
                 color: '#DC2626',
-                fontSize: '11px',
+                fontSize: '10px',
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -309,13 +327,14 @@ const Dashboard: React.FC<DashboardProps> = ({
                 placeholder="e.g., instagram.com"
                 style={{
                   width: '100%',
-                  padding: '10px',
+                  padding: '8px',
                   backgroundColor: '#111827',
-                  border: '2px solid #374151',
-                  borderRadius: '6px',
+                  border: '1px solid #374151',
+                  borderRadius: '4px',
                   color: '#e5e5e5',
-                  fontSize: '13px',
-                  outline: 'none'
+                  fontSize: '12px',
+                  outline: 'none',
+                  boxSizing: 'border-box'
                 }}
               />
             </div>
@@ -323,9 +342,9 @@ const Dashboard: React.FC<DashboardProps> = ({
             <div>
               <label style={{
                 display: 'block',
-                marginBottom: '6px',
+                marginBottom: '4px',
                 color: '#DC2626',
-                fontSize: '11px',
+                fontSize: '10px',
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
@@ -340,14 +359,14 @@ const Dashboard: React.FC<DashboardProps> = ({
                 onChange={(e) => setFormDays(Number(e.target.value))}
                 style={{
                   width: '100%',
-                  height: '4px',
+                  height: '3px',
                   backgroundColor: '#374151',
                   borderRadius: '2px',
                   outline: 'none',
                   cursor: 'pointer'
                 }}
               />
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: '#6B7280', marginTop: '4px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '8px', color: '#6B7280', marginTop: '2px' }}>
                 <span>1 DAY</span>
                 <span>1 YEAR</span>
               </div>
@@ -375,22 +394,22 @@ const Dashboard: React.FC<DashboardProps> = ({
               whileTap={{ scale: 0.98 }}
               style={{
                 width: '100%',
-                padding: '10px',
+                padding: '8px',
                 backgroundColor: formName ? '#DC2626' : '#374151',
                 color: '#FFF',
                 border: 'none',
-                borderRadius: '6px',
+                borderRadius: '4px',
                 fontWeight: 'bold',
-                fontSize: '13px',
+                fontSize: '12px',
                 cursor: formName ? 'pointer' : 'not-allowed',
                 opacity: formName ? 1 : 0.5,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '8px'
+                gap: '6px'
               }}
             >
-              <Skull size={18} />
+              <Skull size={14} />
               <span>BURY FOREVER</span>
             </motion.button>
           </div>
@@ -404,16 +423,17 @@ const Dashboard: React.FC<DashboardProps> = ({
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             border: '2px solid #7F1D1D',
-            borderRadius: '12px',
-            padding: '20px',
-            boxShadow: '0 0 30px rgba(220, 38, 38, 0.2)',
-            minHeight: '250px'
+            borderRadius: '8px',
+            padding: '12px',
+            boxShadow: '0 0 20px rgba(220, 38, 38, 0.2)',
+            minHeight: '200px',
+            boxSizing: 'border-box'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-            <Skull size={20} color="#DC2626" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            <Skull size={16} color="#DC2626" />
             <h2 style={{
-              fontSize: '18px',
+              fontSize: '16px',
               fontFamily: 'Creepster, cursive',
               color: '#DC2626',
               margin: 0

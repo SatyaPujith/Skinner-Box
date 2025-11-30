@@ -9,11 +9,24 @@
         --color-blood: #8a0b0b;
         --color-static: #111;
       }
+      * {
+        box-sizing: border-box;
+      }
+      
       body {
         background-color: #050505;
         color: #e0e0e0;
         font-family: 'Jura', monospace;
         overflow-x: hidden;
+        width: 380px;
+        min-height: 500px;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #root {
+        width: 100%;
+        min-height: 500px;
       }
       
       /* CRT Scanline Effect */

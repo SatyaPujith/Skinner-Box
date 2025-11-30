@@ -32,6 +32,52 @@ export const LearningQuest: React.FC<LearningQuestProps> = ({ onComplete, siteNa
   const [combatResult, setCombatResult] = useState<'correct' | 'wrong' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Sound effects
+  const playSound = (type: 'correct' | 'wrong' | 'victory' | 'death') => {
+    try {
+      const audio = new Audio();
+      // Using Web Audio API to generate spooky sounds
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      if (type === 'correct') {
+        // Success sound - ascending tone
+        oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.2);
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      } else if (type === 'wrong') {
+        // Error sound - descending tone
+        oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.3);
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      } else if (type === 'victory') {
+        // Victory sound - triumphant
+        oscillator.frequency.setValueAtTime(523, audioContext.currentTime);
+        oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1);
+        oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.2);
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+      } else if (type === 'death') {
+        // Death sound - ominous low tone
+        oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      }
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+    } catch (err) {
+      console.log('Sound playback failed:', err);
+    }
+  };
+
   const generateContent = async () => {
     if (!topic.trim()) return;
     
@@ -48,11 +94,11 @@ export const LearningQuest: React.FC<LearningQuestProps> = ({ onComplete, siteNa
         throw new Error('Gemini API key not found. Please add VITE_GEMINI_API_KEY to .env.local file. See API_KEY_SETUP.md for instructions.');
       }
 
-      const prompt = `Create an educational lesson about "${topic}" divided into 3 sections. Each section should teach something important about the topic.
+      const prompt = `Create an educational lesson about "${topic}" divided into 5 sections. Each section should teach something important about the topic, progressing from basics to advanced concepts.
 
 For each section provide:
 1. A short title (3-5 words)
-2. Educational content (2-3 informative paragraphs explaining key concepts)
+2. Educational content (2-3 informative paragraphs explaining key concepts clearly)
 3. A multiple choice quiz question with 4 options to test understanding
 
 Format your response as valid JSON only (no markdown, no code blocks):
@@ -68,7 +114,7 @@ Format your response as valid JSON only (no markdown, no code blocks):
       }
     },
     {
-      "title": "Key Concepts",
+      "title": "Fundamental Concepts",
       "content": "Detailed explanation...",
       "quiz": {
         "question": "Which statement is true?",
@@ -77,18 +123,36 @@ Format your response as valid JSON only (no markdown, no code blocks):
       }
     },
     {
-      "title": "Advanced Topics",
-      "content": "Advanced concepts...",
+      "title": "Core Principles",
+      "content": "Core concepts...",
       "quiz": {
-        "question": "How does this work?",
+        "question": "How does this principle work?",
         "options": ["A", "B", "C", "D"],
         "correctAnswer": 2
+      }
+    },
+    {
+      "title": "Advanced Applications",
+      "content": "Advanced topics...",
+      "quiz": {
+        "question": "What is an advanced application?",
+        "options": ["A", "B", "C", "D"],
+        "correctAnswer": 1
+      }
+    },
+    {
+      "title": "Expert Knowledge",
+      "content": "Expert-level concepts...",
+      "quiz": {
+        "question": "What is the expert-level understanding?",
+        "options": ["A", "B", "C", "D"],
+        "correctAnswer": 3
       }
     }
   ]
 }
 
-Make the content educational, accurate, and engaging. The correctAnswer should be the index (0-3) of the correct option.`;
+Make the content educational, accurate, and progressively more challenging. The correctAnswer should be the index (0-3) of the correct option.`;
 
       console.log('Sending request to Gemini API...');
       const response = await fetch(
@@ -159,6 +223,9 @@ Make the content educational, accurate, and engaging. The correctAnswer should b
     setSelectedAnswer(index);
     const isCorrect = index === sections[currentSection].quiz.correctAnswer;
     setCombatResult(isCorrect ? 'correct' : 'wrong');
+    
+    // Play sound effect
+    playSound(isCorrect ? 'correct' : 'wrong');
 
     setTimeout(() => {
       if (isCorrect) {
@@ -171,6 +238,7 @@ Make the content educational, accurate, and engaging. The correctAnswer should b
             setCombatResult(null);
             setGhostHealth(1);
           } else {
+            playSound('victory');
             setGameState('victory');
           }
         }, 1500);
@@ -178,6 +246,7 @@ Make the content educational, accurate, and engaging. The correctAnswer should b
         setPlayerHealth(prev => prev - 1);
         setTimeout(() => {
           if (playerHealth - 1 <= 0) {
+            playSound('death');
             setCurrentSection(0);
             setGameState('reading');
             setPlayerHealth(3);

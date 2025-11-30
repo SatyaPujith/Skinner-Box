@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "SkinnerBox - Horror Website Blocker",
+  "name": "Dead Scroll - Horror Website Blocker",
   "version": "1.0.0",
-  "description": "Bury websites for days. Breaking the seal requires watching 1 hour of horror animations.",
+  "description": "Bury websites in the graveyard. Complete educational quests to unlock them.",
   "permissions": [
     "storage",
     "tabs",

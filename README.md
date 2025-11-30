@@ -1,4 +1,4 @@
-# 🪦 SkinnerBox - Horror Website Blocker
+# 🪦 Dead Scroll - Horror Website Blocker
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 ## 🎯 Overview
 
-SkinnerBox is a Chrome extension that helps you break free from digital distractions by burying websites in a virtual graveyard. Want to access them? You'll need to complete an AI-powered educational quest first. Learn something new to earn your freedom!
+Dead Scroll is a Chrome extension that helps you break free from digital distractions by burying websites in a virtual graveyard. Want to access them? You'll need to complete an AI-powered educational quest first. Learn something new to earn your freedom!
 
 ### 🌟 Key Highlights
 
@@ -39,7 +39,8 @@ SkinnerBox is a Chrome extension that helps you break free from digital distract
 
 ### 🧙‍♂️ Educational Quest System
 - **Topic Selection** - Choose any subject you want to learn
-- **AI Content Generation** - Gemini creates 3 educational sections with quizzes
+- **AI Content Generation** - Gemini creates 5 educational sections with quizzes
+- **Halloween Sound Effects** - Spooky audio feedback for correct/wrong answers
 - **Combat Mechanics** - Correct answers kill ghosts, wrong answers cost hearts
 - **Progressive Learning** - Complete all sections to unlock the site
 
@@ -68,8 +69,8 @@ SkinnerBox is a Chrome extension that helps you break free from digital distract
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/skinnerbox.git
-cd skinnerbox
+git clone https://github.com/yourusername/deadscroll.git
+cd deadscroll
 
 # 2. Install dependencies
 npm install
